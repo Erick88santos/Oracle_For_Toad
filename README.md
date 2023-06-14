@@ -302,6 +302,11 @@ grant nivel_3 to zorddie;
 ````
 alter user zorddie default role nivel_3;
 ````
+## corrige o erro de espaçamento de aspas para usuário
+````
+grant unlimited tablespace to zorddie;
+````
+
 # **Aprendendo o DROP**
 
 ### **O drop é a deleção**
