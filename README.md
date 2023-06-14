@@ -302,7 +302,7 @@ grant nivel_3 to zorddie;
 ````
 alter user zorddie default role nivel_3;
 ````
-## corrige o erro de espaçamento de aspas para usuário
+## corrige o erro de espaçamento de parentese na criaçãode tables para usuário
 ````
 grant unlimited tablespace to zorddie;
 ````
