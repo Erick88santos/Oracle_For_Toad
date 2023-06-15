@@ -399,3 +399,55 @@ create table pessoa_fisica_endereco(
  1.72
  )
 ````
+
+# *Adicionar coluna*
+
+````
+ alter table pessoa_fisica add (teste number(10));
+````
+
+# *Modificar coluna*
+````
+alter table pessoa_fisica modify (teste number(5,3));
+````
+## Testando se mudou
+````
+desc pessoa_fisica
+````
+# *Renomear coluna*
+````
+alter table pessoa_fisica rename column teste to nome_nova_coluna
+````
+## Testando se mudou
+````
+desc pessoa_fisica
+````
+# *Renomear coluna novamente*
+````
+alter table pessoa_fisica rename column nome_nova_coluna to teste
+````
+## Testando se mudou
+````
+select *
+from pessoa_fisica
+````
+
+# *UPDATE*
+````
+update pessoa_fisica set teste_novo = 10.5;
+````
+## Testando se mudou
+````
+select *
+from pessoa_fisica
+````
+
+# *Renomear a tabela*
+````
+alter table pessoa_fisica rename to pessoa_fisica_novo;
+````
+
+# *Dropar Coluna*
+````
+alter table pessoa_fisica drop column teste
+````
