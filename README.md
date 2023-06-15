@@ -329,3 +329,73 @@ drop user nameUser;
 ````
 revoke nivel_3 from nameUser;
 ````
+# *Criando Tabelas*
+
+### **Necessário logar um usuário de nível 3 defeinido para começar.**
+
+## Criando a tabela pessoa_fisica
+````
+create table pessoa_fisica(
+ nr_sequencia integer, 
+ dt_criacao date, 
+ dt_alteracao date, 
+ nm_pessoa_fisica varchar2(255), 
+ dt_nascimento date, 
+ nr_cpf varchar2(11), 
+ qt_altura number(3,2)
+ )
+````
+
+## Criando uf
+````
+create table uf(
+ nr_sequencia integer,
+ dt_criacao date,
+ dt_alteracao date,
+ cd_uf_ibge number(2),
+ sg_uf varchar2(2),
+ ds_uf varchar2(255) 
+ );
+````
+
+## Criando tabela municipio
+````
+create table municipio(
+ nr_sequencia integer,
+ dt_criacao date,
+ dt_alteracao date,
+ cd_municipio_ibge number(7),
+ ds_municipio varchar2(255)
+ );
+````
+
+## Criando a tabela pessoa_fisica_endereco
+````
+create table pessoa_fisica_endereco(
+ nr_sequencia integer,
+ dt_criacao date,
+ dt_alteracao date,
+ nr_seq_pessoa_fisica integer,
+ nr_seq_uf integer,
+ nr_seq_municipio integer,
+ ds_logradouro varchar(255),
+ nr_endereco integer,
+ ds_bairro varchar2(255),
+ nr_cpf number(8)
+ );
+````
+
+# *Inserção de registro*
+
+````
+ insert into pessoa_fisica (
+ nr_sequencia,
+ nm_pessoa_fisica,
+ qt_altura
+ ) 
+ values (
+ 1, 
+ 'Erick',
+ 1.72
+ )
+````
