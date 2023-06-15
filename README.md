@@ -451,3 +451,9 @@ alter table pessoa_fisica rename to pessoa_fisica_novo;
 ````
 alter table pessoa_fisica drop column teste
 ````
+
+# **Constraints**
+### *(PK, FK, UNIQUE, CHECK)*
+CONSTRAINTS TRAZEM LIMITAÇÕES NO BANCO DE DADOS 
+
+## **
