@@ -456,4 +456,27 @@ alter table pessoa_fisica drop column teste
 ### *(PK, FK, UNIQUE, CHECK)*
 CONSTRAINTS TRAZEM LIMITAÇÕES NO BANCO DE DADOS 
 
-## **
+# **PRIMARY KEY**
+Impõe exclusividade de linhas e também não permite valores do tipo NULLs nos atributos de constraint. Cada valor nos atributos de uma constraint do tipo Primary Key pode aparecer somente uma vez na tabela, somente em uma linha e cada tabela só pode possuir uma primary key
+## **SUPONDO QUE UMA TABELA FOI CRIADA E ESTAMOS A ALTERAR PARA ADD AS CONSTRAINTS**
+## *Vamos alterar nr_sequencia da tabela uf, para nr_seq_uf_pk e adicionar como constraint*
+````
+alter table uf add constraint nr_seq_uf_pk primare key (nr_sequencia);
+````
+
+# **UNIQUE**
+impede que valores duplicados sejam inseridos na coluna. É implementada criando-se um índice unívoco em uma coluna. Como mostrado na Listagem 3, o UNIQUE impede valores duplicados na coluna.
+## *Vamos alterar a tabela cd_uf_ibge para sg_uf_un e Add constraint do tipo unique*
+````
+ alter table uf add constraint sg_uf_un unique (sg_uf);
+````
+# **DROPAR UMA CONSTRAINT**
+````
+alter table nameTabe drop constraint nameConstraint
+````
+# **MODIFY - CAMPOS NÃO NULOS**
+
+## *DEFININDO OS CAMPOS NÃO NULOS OU NOT NULL da tabela uf as colunas sg_uf, cd_uf_ibge*
+````
+alter table uf modify(sg_uf not null, cd_uf_ibge not null);
+````
