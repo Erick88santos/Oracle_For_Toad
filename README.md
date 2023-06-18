@@ -566,3 +566,10 @@ alter table teste add constraint b1_ck check(b1 between 10 and 18)
 insert into teste (a1) values('sjah')
 insert into teste (b1) values ('20')
 ````
+# *DESAFIO DA CONSTRAINT CHECK*
+
+## **------DESAFIO------**
+ **ADICIONAR UMA COLUNA CHAMADA SEXO DO TIPO VARCHAR2(1) NA TABELA PESSOA_FISICA E CRIAR 
+ UMA CONSTRAINT SEXO_CK PARA RECEBER APENAS AS LETRAS ('F','f','M','m','I','i')**
+
+#### *DESAFIO RESOLVIDO: [RESPOSTA](https://commie.io/#QC4f0ABO)*
