@@ -535,3 +535,34 @@ alter table pessoa_fisica_endereco add constraint nr_seq_municipio_end_fk foreig
 ````
 alter table pessoa_fidica_endereco modify (nr_seq_pessoa_fisica not null)
 ````
+# **CONSTRAINT CHECK**
+### *A CONSTRAINT CHECK SERVE PARA RESTRINGIR OS TIPOS DE DADOS A SEREM INSERIDOS NA TABELA*
+
+## *CRIANDO TABELA TESTE E ALTERANDO PARA COSNTRAINT CHECK*
+````
+create table teste (a1 varchar2(2), b1 number, b2 number)
+````
+## *ALTERANDO A TABELA A1 PARA CONSTRAINT CHECK*
+````
+alter table add constraint a1_ck check(a1 in('nameEmpresa','silgalEmpresa','cnpjEmpresa'))
+````
+## *A PARTIR DESSE COMANDO ACIMA VOCÊ SÓ CONSEGUIRÁ INSERIR O DADO EXCLUSIVO ESCOLHIDO, O EXEMPLO ACIMA MOSTRA COMO PARÂMETRO O nome da empresa, ou sigla da empresa, ou cnpj da empresa, ISSO PARA CRIAR UMA IDENTIDADE NA TABELA.*
+
+## *ALTERANDO A TABELA B1 PARA CONSTRAINT APENAS RECEBER NUMEROS MAIORES OU IGUAIS A 1*
+````
+alter table add constraint b1_ck check(b1 >= 1)
+````
+#### **TENTE INSERIR APÓS ALTERAR A CONSTRANTE ACIMA**
+````
+insert into teste (a1) values (0);
+````
+## *APARECERÁ UM ERRO INFORMANDO QUE EXISTE RESTRIÇÃO DE VERIFICAÇÃO VIOLADA PELO USUÁRIO*
+
+# *CONSTRAINT CHECK criando, alterando e testando a restrição.*
+````
+create table teste(a1 varchar2(2), b1 number)
+alter table teste add constraint a1_ck check(a1 in('ER','er','Er'));
+alter table teste add constraint b1_ck check(b1 between 10 and 18)
+insert into teste (a1) values('sjah')
+insert into teste (b1) values ('20')
+````
