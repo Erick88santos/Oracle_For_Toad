@@ -480,3 +480,58 @@ alter table nameTabe drop constraint nameConstraint
 ````
 alter table uf modify(sg_uf not null, cd_uf_ibge not null);
 ````
+## *VAMOS DROPAR A TABELA E CONSTRUÍ-LA DO JEITO CERTO*
+````
+drop table uf;
+````
+# **CONSTRUINDO  TABELA UF DO JEITO CORRETO**
+````
+ create table uf(
+ nr_sequencia integer constraint nr_seq_uf_pk primary key,
+ dt_criacao date,
+ dt_alteracao date,
+ cd_uf_ibge number(2)not null constraint cd_uf_ibge_un unique,
+ sg_uf varchar2(2)not null constraint sg_uf_un unique,
+ ds_uf varchar2(255) 
+ );
+````
+
+# **CONSTRUINDO  TABELA  DO JEITO CORRETO**
+## *DROPAR A TABELA PSSOA_FISICA*
+````
+drop table pessoa_fisica
+````
+## *Criando a tabela pessoa_fisica do jeito correto restritivo* 
+````
+ create table pessoa_fisica(
+ nr_sequencia integer constraint nr_seq_pf_pk primary key, 
+ dt_criacao date, 
+ dt_alteracao date, 
+ nm_pessoa_fisica varchar2(255), 
+ dt_nascimento date, 
+ nr_cpf varchar2(11) constraint pessoa_fisica_cpf_un unique, 
+ qt_altura number(3,2)
+ );
+````
+# **ALTERANDO A TABELA pessoa_fisica_endereco DO JEITO CORRETO ADD CONSTRAINTS**
+### *EM CASO DE JÁ POSSUIR DADOS A TABELA DEVERÁ SER ALTERADA E NÃO DROPADA PARA EVITAR A PERDA DE DADOS.*
+````
+alter table pessoa_fisica_endereco add constraint nr_seq_end_pf_pk primary key(nr_sequencial);
+````
+# **CONSTRAINTS CHAVES ESTRANGEIRAS FK.**
+````
+alter table pessoa_fisica_endereco add constraint nr_seq_pf_end_fk foreign key (nr_seq_pessoa_fisica) references pessoa_fisica(nr_sequencia);
+````
+#
+````
+alter table pessoa_fisica_endereco add constraint nr_seq_uf_end_fk foreign key (nr_seq_uf) references uf(nr_sequencia);
+````
+#
+````
+alter table pessoa_fisica_endereco add constraint nr_seq_municipio_end_fk foreign key (nr_seq_municipio) references municipio(nr_sequencia);
+````
+# *COMO NA TABELA PESSOA_FISICA_ENDERECO SEMPRE IRÁ PRECISAR DE UMA PESSOA ELE DEVE SER NOT NULL*
+## **DEVEMOS ALTERAR PARA NOT NULL COM O COMANDO MODIFY**
+````
+alter table pessoa_fidica_endereco modify (nr_seq_pessoa_fisica not null)
+````
