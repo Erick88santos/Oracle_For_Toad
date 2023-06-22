@@ -43,6 +43,14 @@ SQL  👋
 2. dba = Administrador de Banco de Dados
 3. identified = criador de senha
 
+## **COMANDO INTERNO DO ORACLE**
+
+## *HORA E DATA ATUAL*
+````
+select sysdate
+from dual
+````
+
 ## **Criando usuário admin**
 ```
 create user admin identified by "asdf@789";
@@ -573,3 +581,156 @@ insert into teste (b1) values ('20')
  UMA CONSTRAINT SEXO_CK PARA RECEBER APENAS AS LETRAS ('F','f','M','m','I','i')**
 
 #### *DESAFIO RESOLVIDO: [RESPOSTA](https://commie.io/#QC4f0ABO)*
+
+# *CREATE SEQUENCE + INSERT INTO + SQLPLUS*
+
+## **SEQUENCE**
+### Sequences são objetos que geram números sequenciais dentro do Oracle. São excelentes em termos de performance já que armazenam um range de números no cache e também porque tiram do desenvolvedor a responsabilidade de gerenciar a geração de Ids em casos de multiplos acessos.
+
+*start with* = INICIANDO A SEQUENCE COM UM DETERMINADO NÚMERO.
+
+ *increment* by = PODE SER NEGATIVO OU POSITIVO A DEPENDER DA ORDEM DE SEQUÊNCIA PARA INCREMENTAR COMO DESEJAR.
+
+ *maxvalue* = MÁXIMO VALOR DA SEQUENCE
+ 
+ *minvalue* = MENOR VALOR DA SEQUENCE
+ 
+ *nocache* = INDICA QUE A SEQUENCE NÃO TERÁ CACHE DE QUANTIDADE DE REGISTROS QUE O ORACLE VAI ARMAZENAR EM MEMÓRIA PARA AUMENTO DE PERFORMANCE. SE NÃO USAR A FLAG "NOCACHE" O PADRÃO VAI SER CACHE 20
+ 
+ *cycle* =  APÓS COMPLETAR A SEQUÊNCIA DEFINIDA PELO MAXVALUE ELE RETORNA PARA O VALOR DE START DA SEQEUNCE.
+ 
+## *CRIANDO SEQUENCE*
+````
+create sequence pessoa_fisica_seq
+ start with 1
+ increment by 1
+ maxvalue 9999999
+ minvalue 1
+ nocache
+````
+
+````
+create sequence uf_seq
+ start with 1
+ increment by 1
+ maxvalue 9999999
+ minvalue 1
+ nocache;
+````
+
+## **INSERT**
+INSERÇÃO DE ELEMENTOS NA TABELA
+
+## **INSERÇÃO DE ELEMENTOS EM TODAS AS COLUNAS**
+````
+insert into uf values();
+````
+
+## FORÇANDO O AUTO INCREMENTO DE VALOR DA COLUNA uf_seq.
+````
+select uf_seq.nextval
+from dual
+````
+## **INSERÇÃO DE ELEMENTOS EM COLUNAS ESPECÍFICAS**
+````
+insert into uf(
+nr_sequencia,
+dt_criacao,
+cd_uf_ibge,
+sg_uf,
+ds_uf)
+values(
+uf_seq.nextval, 
+sysdate,
+12, 
+'SC', 
+'Santa Catarina');
+````
+## **COMMIT**
+*DEVEMOS INSERIR O COMMIT OU CASO CONTRÁRIO A INSERÇÃO CRIADA ACIMA ESTARÁ SÓ EM MEMÓRIA NO BANCO E NÃO SERÁ GRVADA*
+````
+commit
+````
+OU
+## **ROLLBACK**
+ESTE COMANDO SERVE PARA DESFAZER AS ALTERAÇÕES.
+````
+rollback
+````
+
+## **OUTRA FORMA DE INSERT: colocar todas as colunas**
+````
+declare
+cd_uf_w number(2);  
+begin
+insert into uf values(
+nr_sequencia,
+dt_criacao,
+cd_uf_ibge,
+sg_uf,
+ds_uf
+sysdate,
+sysdate,
+16,
+'PR',
+'PARANÁ')return nr_sequencia into cd_uf_w;
+end;
+````
+
+## **INSERIR A PARTIR DE UM SELECT**
+````
+insert into uf(
+nr_sequence,
+dt_criacao,
+cd_uf_ibge,
+sg_uf,
+ds_uf) select uf_seq.nextval, sysdate, 15, 'AP', 'AMAPÁ' from dual
+````
+# ***DELETA A TABELA UF E COMMITA*
+````
+delete uf
+````
+````
+commit
+````
+
+## **inserção de dados**
+````
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 12,    'AC', 'Acre');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 27,    'AL', 'Alagoas');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 16,    'AP', 'Amapá');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 13,    'AM', 'Amazonas');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 29,    'BA', 'Bahia');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 23,    'CE', 'Ceará');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 53,    'DF', 'Distrito Federal');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 32,    'ES', 'Espírito Santo');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 52,    'GO', 'Goiás');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 21,    'MA', 'Maranhão');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 51,    'MT', 'Mato Grosso');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 50,    'MS', 'Mato Grosso do Sul');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 31,    'MG', 'Minas Gerais');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 15,    'PA', 'Pará');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 25,    'PB', 'Paraíba');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 41,    'PR', 'Paraná');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 26,    'PE', 'Pernambuco');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 22,    'PI', 'Piauí');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 33,    'RJ', 'Rio de Janeiro');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 24,    'RN', 'Rio Grande do Norte');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 43,    'RS', 'Rio Grande do Sul');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 11,    'RO', 'Rondônia');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 14,    'RR', 'Roraima');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 42,    'SC', 'Santa Catarina');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 35,    'SP', 'São Paulo');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 28,    'SE', 'Sergipe');
+insert into uf(nr_sequencia, dt_criacao, cd_uf_ibge, sg_uf, ds_uf)values(uf_seq.nextval, sysdate, 17,    'TO',  'Tocantins');
+````
+# ***DELETA A TABELA UF E COMMITA PARA INSERIR COM SQL PLUS*
+````
+delete uf
+````
+````
+commit
+````
+# *SQL PLUS*
+1. APERTE AS TECLAS 'WINDOWS + R'.
+2. DIGITE ````sqlplus````
